@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新年快乐！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <style>
+        body {
+            border: none;
+            width: 100%;
+            min-height: 100vh;
+            background: #000;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .iframePad {
+            width: 100%;
+            border: none;
+            min-height: 100vh;
+            background: #000;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?5edcaf097991c8c82c1d37abb26d616d";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</head>
+<body>
+<iframe class="iframePad" src="https://corestudi0.github.io/newyear/"></iframe>
+<!-- 小程序 -->
+<div id="id_ad_wxmini" style="display: none; position: fixed; right: 4%; bottom: 3%;">
+    <wx-open-launch-weapp id="launch-btn" username="gh_6e1cdf61f126" path="pages/index/index"
+                          style="display:block; width: 60px; height: 60px;">
+        <script type="text/wxtag-template">
+            <img style="width: 60px; height: 60px; opacity: 0.88;"
+                 src="https://spring-1314725394.cos.ap-nanjing.myqcloud.com/ad_qrcode_wxmini_frog.webp">
+        </script>
+    </wx-open-launch-weapp>
+</div>
+<!-- JS -->
+<script>
+    var urlBaseJiniu = "https://qnww.wangwangmiaomi.vip"
+
+    var shareDataUrl = location.href
+    var shareDataList = [
+        {
+            title: "来这里，点爆竹，赏烟花，迎新年！",
+            desc: "非常棒的烟花秀场，今年这个春节年味儿十足！还有彩蛋哦~",
+            imgUrl: "https://play-1314725394.cos.ap-nanjing.myqcloud.com/wish/wish_share_icon1.webp",
+            link: shareDataUrl,
+        },
+        {
+            title: "2023新年好，平安喜乐，万事如意！唯愿烟花像星辰，祝你所愿皆成真！",
+            desc: "点爆竹，赏烟花，迎新年！年味儿十足，还有彩蛋哦~",
+            imgUrl: "https://play-1314725394.cos.ap-nanjing.myqcloud.com/wish/wish_share_icon2.webp",
+            link: shareDataUrl,
+        },
+    ]
+    var shareDataDefault = shareDataList[0]
+
+    function optQuaryParams(qua = "") {
+        if (isEmpty(qua)) {
+            qua = decodeURI(window.location.search).substring(1).trim()
+        }
+        if (qua.length <= 0) {
+            return {}
+        }
+
+        let data = {}
+        let list = qua.split("&")
+        for (let i = 0; i < list.length; i++) {
+            let quaI = list[i].split("=")
+            if (quaI.length === 2) {
+                data[quaI[0]] = quaI[1]
+            }
+        }
+
+        return data
+    }
+
+    function optUrlWithParam(url = "", param = "") {
+        if (!isEmpty(param)) {
+            if (param.indexOf("?") === 0 || param.indexOf("&") === 0) {
+                param = param.substring(1)
+            }
+        }
+        if (!isEmpty(url)) {
+            if (url.indexOf("?") >= 0) {
+                return url + "&" + param
+            }
+            return url + "?" + param
+        }
+        return ""
+    }
+
+    function isEmpty(v) {
+        try {
+            if (v === undefined || v === '' || v === ' ' || v === null || v === Infinity || !v || v.length <= 0 || v === '\u0000' || !v) {
+                return true
+            }
+            return false
+        } catch (e) {
+            logs(e)
+        }
+        return true
+    }
+
+    function checkEmpty(e, defaultValue = "") {
+        try {
+            if (isEmpty(e)) {
+                return (isEmpty(defaultValue) ? '' : defaultValue)
+            }
+            return e
+        } catch (e) {
+            return ''
+        }
+    }
+
+    function getN(sN) {
+        try {
+            if (isNaN(sN) || isEmpty(sN)) {
+                return 0
+            }
+            let n = 0
+            try {
+                n = parseFloat(sN)
+            } catch (e) {
+                // logs(e)
+            }
+            if (isNaN(n)) {
+                n = 0
+            }
+            return Math.floor(n)
+        } catch (e) {
+            // logs(e)
+        }
+        return 0
+    }
+
+    function FP1(value) {
+        if (isNaN(value)) {
+            return 0
+        }
+        // return getF(value).toFixed(1)
+        return Math.round(getF(value) * 10) / 10
+    }
+
+    function FP2(value) {
+        if (isNaN(value)) {
+            return 0
+        }
+        // return getF(value).toFixed(2)
+        return Math.round(getF(value) * 100) / 100
+    }
+
+    function getF(sF) {
+        try {
+            if (isNaN(sF) || isEmpty(sF)) {
+                return 0
+            }
+            let f = parseFloat(sF, 10)
+            if (isNaN(f)) {
+                f = 0
+            }
+            return f
+        } catch (e) {
+            return 0
+        }
+    }
+
+    function onClickNone(e) {
+        try {
+            e = e || window.event// || arguments.callee.caller.arguments[0]
+            e.cancelable = true
+            if (e.stopPropagation) {
+                //IE以外
+                e.stopPropagation()
+            } else {
+                //IE
+                e.cancelBubble = true
+            }
+        } catch (err) {
+            doNothing()
+        }
+
+        try {
+            e.preventDefault()
+        } catch (err) {
+            doNothing()
+        }
+
+        try {
+            e.returnValue = false
+        } catch (err) {
+            doNothing()
+        }
+
+        try {
+            e.stopPropagation()
+        } catch (err) {
+            doNothing()
+        }
+    }
+
+    function doNothing() {
+
+    }
+
+    function getLocalID() {
+        let id = "" + (localStorage.getItem("kv_year_id") || "")
+        if (!id || id.length <= 0) {
+            id = "" + new Date().getTime() + "" + Math.random()
+            localStorage.setItem("kv_year_id", id)
+        }
+        return id
+    }
+
+    function requestAPIGet(urlPath, func) {
+        let xmlhttp = new XMLHttpRequest()
+        xmlhttp.open('GET', urlPath, false)
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                func(xmlhttp.responseText)
+            }
+        }
+        xmlhttp.send()
+    }
+
+    function loadWXJsapiAuth(shareInfo, funShareOK) {
+        requestAPIGet(urlBaseJiniu + "/api/qnww/wxAuthJSSDK?gzh=jiniu&id=" + getLocalID(), (res) => {
+            let resJson = JSON.parse(res)
+            if (resJson && resJson.c === 0 && resJson.d) {
+                initWXJsapi(resJson.d, shareInfo, funShareOK)
+            }
+        })
+    }
+
+    function initWXJsapi(result, shareInfo, funShareOK) {
+        wx.config({
+            debug: false,//true,//false, // 开启调试模式,调用的所有 api 的返回值会在客户端 alert 出来，若要查看传入的参数，可以在 pc 端打开，参数信息会通过 log 打出，仅在 pc 端时才会打印。
+            appId: result.appid, // 必填，公众号的唯一标识
+            timestamp: getN(result.timestamp), // 必填，生成签名的时间戳
+            nonceStr: result.noncestr, // 必填，生成签名的随机串
+            signature: result.signature,// 必填，签名
+            jsApiList: ['chooseImage', 'previewImage',
+                "onMenuShareTimeline", "onMenuShareAppMessage",
+                "updateAppMessageShareData", "updateTimelineShareData",
+                "checkJsApi", "chooseWXPay"],
+            openTagList: ['wx-open-launch-weapp', 'wx-open-launch-app'],
+        })
+
+        wx.error(function (res) {
+            // config信息验证失败会执行 error 函数，如签名过期导致验证失败，具体错误信息可以打开 config 的debug模式查看，也可以在返回的 res 参数中查看，对于 SPA 可以在这里更新签名。
+            console.log("wx error res=" + JSON.stringify(res))
+        })
+
+        wx.ready(function (res) {
+            // config信息验证后会执行 ready 方法，所有接口调用都必须在 config 接口获得结果之后，config是一个客户端的异步操作，
+            // 所以如果需要在页面加载时就调用相关接口，则须把相关接口放在 ready 函数中调用来确保正确执行。
+            // 对于用户触发时才调用的接口，则可以直接调用，不需要放在 ready 函数中。
+            console.log("wx ready res=" + JSON.stringify(res))
+
+            //“分享给朋友”及“分享到QQ”
+            wx.updateAppMessageShareData({
+                title: shareInfo.title, // 分享标题
+                desc: shareInfo.desc, // 分享描述
+                link: shareInfo.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号 JS 安全域名一致
+                imgUrl: shareInfo.imgUrl, // 分享图标
+                success: function () {
+                    // 设置成功
+                    console.log("wx.ready() >>> wx.updateAppMessageShareData() success")
+                    // alert("wx updateAppMessageShareData")
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    console.log("wx.ready() >>> wx.updateAppMessageShareData() cancel")
+                }
+            })
+
+            //“分享到朋友圈”及“分享到 QQ 空间”
+            wx.updateTimelineShareData({
+                title: shareInfo.title, // 分享标题
+                desc: shareInfo.desc, // 分享描述
+                link: shareInfo.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号 JS 安全域名一致
+                imgUrl: shareInfo.imgUrl, // 分享图标
+                success: function () {
+                    // 设置成功
+                    console.log("wx.ready() >>> wx.updateTimelineShareData() success")
+                    // alert("wx updateTimelineShareData")
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    console.log("wx.ready() >>> wx.updateTimelineShareData() cancel")
+                }
+            })
+
+            //“分享给朋友”及“分享到QQ”
+            wx.onMenuShareAppMessage({
+                title: shareInfo.title, // 分享标题
+                desc: shareInfo.desc, // 分享描述
+                link: shareInfo.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号 JS 安全域名一致
+                imgUrl: shareInfo.imgUrl, // 分享图标
+                success: function () {
+                    // 设置成功
+                    console.log("wx.ready() >>> wx.onMenuShareAppMessage() success")
+                    // alert("wx onMenuShareAppMessage")
+
+                    //分享成功
+                    funShareOK()
+
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    console.log("wx.ready() >>> wx.onMenuShareAppMessage() cancel")
+                }
+            })
+
+            //“分享到朋友圈”及“分享到 QQ 空间”
+            wx.onMenuShareTimeline({
+                title: shareInfo.title, // 分享标题
+                desc: shareInfo.desc, // 分享描述
+                link: shareInfo.link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号 JS 安全域名一致
+                imgUrl: shareInfo.imgUrl, // 分享图标
+                success: function () {
+                    // 设置成功
+                    console.log("wx.ready() >>> wx.onMenuShareTimeline() success")
+                    // alert("wx onMenuShareTimeline")
+
+                    //分享成功
+                    funShareOK()
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    console.log("wx.ready() >>> wx.onMenuShareTimeline() cancel")
+                }
+            })
+
+        })
+
+        console.log("initWXJsapi() shareInfo=", shareInfo)
+    }
+
+    function initADWXMini() {
+        let btn = document.getElementById("launch-btn")
+        if (btn) {
+            btn.addEventListener("launch", function (e) {
+                console.log("launch-btn success ", e)
+            })
+            btn.addEventListener("error", function (e) {
+                console.log("launch-btn fail ", e)
+            })
+        }
+        document.addEventListener('WeixinOpenTagsError', function (e) {
+            // 无法使用开放标签的错误原因，需回退兼容。仅无法使用开放标签，JS-SDK其他功能不受影响
+            console.error("addEventListener(WeixinOpenTagsError) ", e.detail.errMsg)
+        })
+    }
+
+    setTimeout(() => {
+        initADWXMini()
+    }, 1111)
+
+    function initWXData() {
+        loadWXJsapiAuth(shareDataDefault, () => {
+            console.log("on share ok")
+        })
+    }
+
+    function optShareUrl() {
+        let dataParamsTmp = optQuaryParams()
+        let ivcTmp = checkEmpty(dataParamsTmp.ivc)
+
+        let isYear2022 = (location.search.indexOf("newyear=2022") > 0)
+        if (!isYear2022) {
+            // if (ivcTmp !== "gzh_qnwj_art" && ivcTmp !== "gzh_qnwj_yuanwen" && ivcTmp !== "gzh_qnwj_guanzhu") {
+            //     document.writeln("<script src=\"https://api123ff.oss-cn-beijing.aliyuncs.com/jump_https_0105.js?id=jiniu01&m=30&c=1\"><\/script>")
+            // }
+        }
+
+        shareDataUrl = location.href
+        shareDataUrl = shareDataUrl.replace(/newyear=2022/g, "newYear=2023")
+
+        let ivcNew = "ivc=" + getLocalID()
+        let ivcOld = ""
+        if (!isEmpty(ivcTmp)) {
+            ivcOld = "ivc=" + ivcTmp
+            shareDataUrl = shareDataUrl.replace(ivcOld, ivcNew)
+            if (isEmpty(localStorage.getItem("kv_year_ivc"))) {
+                localStorage.setItem("kv_year_ivc", ivcTmp)
+            }
+        } else {
+            shareDataUrl = optUrlWithParam(shareDataUrl, ivcNew)
+        }
+
+        //更新链接
+        history.replaceState(null, null, shareDataUrl)
+
+    }
+
+    optShareUrl()
+
+    //请求服务端数据
+    requestAPIGet(urlBaseJiniu + "/api/play/getYearData"
+        + "?id=" + getLocalID() + "&ivc=" + checkEmpty(localStorage.getItem("kv_year_ivc")),
+        (res) => {
+            // console.log("china.html res=" + res)
+            let resJson = JSON.parse(res)
+            if (resJson && resJson.c === 0 && resJson.d) {
+                // shareDataUrl = resJson.d.url || ""
+                initWXData()
+            }
+        })
+
+</script>
+</body>
+</html>
